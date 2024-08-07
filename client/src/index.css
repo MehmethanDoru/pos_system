@@ -8,5 +8,9 @@ body {
   margin: 0;
   font-family: "Fira Sans", sans-serif;
   background-color: #d6d6d63c;
+  overflow: hidden;
+}
 
+.categories::-webkit-scrollbar {
+  display: none;
 }
