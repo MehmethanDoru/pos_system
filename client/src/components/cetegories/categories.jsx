@@ -22,6 +22,7 @@ const categories = () => {
         <li className="bg-green-600 py-8 px-10 text-white cursor-pointer hover:bg-rose-500 transition-all text-center">
             <span>Meze</span>
         </li>
+        
     </ul>
   )
 }
