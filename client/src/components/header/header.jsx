@@ -28,12 +28,12 @@ const header = () => {
             className="rounded-full max-w-[900px]"
           />
         </div>
-        <div className="menu-links flex justify-between gap-8">
+        <div className="menu-links flex justify-between gap-8 md:static fixed bottom-0 md:w-auto left-0 md:border-none border-t px-4 py-1 w-full">
           <a href="" className="menu-link flex flex-col items-center">
             <HomeOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Home Page</span>
+            <span className="md:text-xs text-[10px]">Home</span>
           </a>
-            <Badge count={8} offset={[0,6]}>
+            <Badge count={8} offset={[0,6]} className="md:flex hidden">
           <a href="" className="flex flex-col">
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Cart</span>
@@ -56,6 +56,12 @@ const header = () => {
             <span className="md:text-xs text-[10px]">Log Out</span>
           </a>
         </div>
+        <Badge count={8} offset={[0, 6]} className="md:hidden flex">
+          <a href="" className="flex flex-col">
+            <ShoppingCartOutlined className="md:text-2xl text-xl" />
+            <span className="md:text-xs text-[10px]">Cart</span>
+          </a>
+        </Badge>
       </header>
     </div>
   );
