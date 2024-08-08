@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        "card": "repeat(auto-fill, minmax(200px, 1fr))"
+        "card": "repeat(auto-fill, minmax(150px, 1fr))",
+        "card-md": "repeat(auto-fill, minmax(200px, 1fr))"
       },
     },
   },

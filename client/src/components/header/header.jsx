@@ -28,7 +28,7 @@ const header = () => {
             className="rounded-full max-w-[900px]"
           />
         </div>
-        <div className="menu-links flex justify-between gap-8 md:static fixed bottom-0 md:w-auto left-0 md:border-none border-t px-4 py-1 w-full">
+        <div className="menu-links flex justify-between gap-8 md:static fixed z-50 bottom-0 md:w-auto left-0 md:border-none border-t px-4 py-1 w-full bg-white md:bg-transparent">
           <a href="" className="menu-link flex flex-col items-center">
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
