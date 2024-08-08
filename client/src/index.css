@@ -12,7 +12,8 @@ body {
 }
 
 .categories::-webkit-scrollbar,
-.products::-webkit-scrollbar {
+.products::-webkit-scrollbar,
+.cart-items::-webkit-scrollbar {
   display: none;
 }
 
