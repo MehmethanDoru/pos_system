@@ -1,25 +1,77 @@
-import Header from "../components/header/header";
-import Categories from "../components/cetegories/categories";
-import Products from "../components/products/products";
-import Cart from "../components/cart/cart";
+import { Button, Card, Modal, Table } from "antd";
+import { useState } from "react";
+import CreateBill from "../components/cart/createBill";
 
 const CartPage = () => {
-  return (
-    <div className="body">
-    <Header />
-    <div className="home px-6 flex flex-col md:flex-row justify-between gap-10">
-      <div className="categories overflow-auto max-h-[calc(100vh-_-115px)] md:pb-72 transition-all">
-        <Categories />
-      </div>
-      <div className="products flex-[8] overflow-auto max-h-[calc(100vh-_-115px)] transition-all md:pb-72">
-        <Products />
-      </div>
-      <div className="cart-wrapper min-w-[300px] md:-mr-[24px] mb-14 md:mb-0 md:-mt-[24px] border">
-        <Cart />
-      </div>
-    </div>
-  </div>
-  )
-}
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dataSource = [
+    {
+      key: "1",
+      name: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+  ];
 
-export default CartPage
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+
+  return (
+    <div className="body px-6">
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        bordered
+        pagination={false}
+      />
+      <div className="cart-total flex justify-end">
+        <Card className="w-72 mt-4">
+          <div className="flex justify-between">
+            <span>Subtotal</span>
+            <span>549.00₺</span>
+          </div>
+          <div className="flex justify-between my-2">
+            <span>KDV %8</span>
+            <span className="text-red-600">+43.92₺</span>
+          </div>
+          <div className="flex justify-between">
+            <b>Total</b>
+            <b>592.92₺</b>
+          </div>
+          <Button
+              className="mt-4 w-full"
+              type="primary"
+              size="large"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Order
+            </Button>
+        </Card>
+      </div>
+      <CreateBill isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    </div>
+  );
+};
+
+export default CartPage;

@@ -1,4 +1,3 @@
-import Header from "../components/header/header";
 import Categories from "../components/cetegories/categories";
 import Products from "../components/products/products";
 import Cart from "../components/cart/cart";
@@ -6,7 +5,6 @@ import Cart from "../components/cart/cart";
 const HomePage = () => {
   return (
     <div className="body">
-      <Header />
       <div className="home px-6 flex flex-col md:flex-row justify-between gap-10">
         <div className="categories overflow-auto max-h-[calc(100vh-_-115px)] md:pb-72 transition-all">
           <Categories />
@@ -19,7 +17,7 @@ const HomePage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
