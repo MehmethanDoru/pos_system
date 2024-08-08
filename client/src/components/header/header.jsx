@@ -9,7 +9,7 @@ import {
   BarChartOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
-import { Input, Avatar, Badge } from "antd";
+import { Input, Badge } from "antd";
 
 const header = () => {
   return (
@@ -41,7 +41,7 @@ const header = () => {
             </Badge>
           <a href="" className="flex flex-col">
             <CopyOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Invoices</span>
+            <span className="md:text-xs text-[10px]">Bills</span>
           </a>
           <a href="" className="flex flex-col">
             <UserOutlined className="md:text-2xl text-xl" />

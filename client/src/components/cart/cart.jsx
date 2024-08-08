@@ -7,7 +7,7 @@ import {
 
 const cart = () => {
   return (
-    <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
+    <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
       <h2 className="bg-blue-600 text-center py-4 text-white font-bold tracking-wide">
         Products in Cart
       </h2>
