@@ -58,7 +58,7 @@ const header = () => {
           </Link>
         </div>
         <Badge count={8} offset={[0, 6]} className="md:hidden flex">
-          <Link to="" className="flex flex-col">
+          <Link to={"/cart"} className="flex flex-col">
             <ShoppingCartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Cart</span>
           </Link>
