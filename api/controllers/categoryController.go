@@ -18,7 +18,7 @@ type CategoryController struct {
 }
 
 func NewCategoryController(client *mongo.Client) *CategoryController {
-	collection = client.Database("your_database").Collection("categories")
+	collection = client.Database("pos-app").Collection("categories")
 	return &CategoryController{client: client}
 }
 
