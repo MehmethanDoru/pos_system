@@ -5,6 +5,7 @@ import StatisticsPage from "./pages/StatisticsPage";
 import CustomerPage from "./pages/CustomersPage";
 import BillsPage from "./pages/BillsPage";
 import Header from "./components/header/header";
+
 function App() {
   return (
     <BrowserRouter>
