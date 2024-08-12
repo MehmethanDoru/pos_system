@@ -97,7 +97,7 @@ const StatisticsPage = () => {
             </div>
           </div>
           </div>
-          <div className="flex flex-col md:grid md:grid-cols-2 justify-between  ">
+          <div className="flex flex-col md:grid md:grid-cols-2 justify-between pb-12  ">
             <div className='h-72'>
               <Area {...config} />
             </div>

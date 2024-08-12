@@ -5,17 +5,58 @@ import StatisticsPage from "./pages/StatisticsPage";
 import CustomerPage from "./pages/CustomersPage";
 import BillsPage from "./pages/BillsPage";
 import Header from "./components/header/header";
+import RegisterPage from "./pages/auth/register";
 
 function App() {
   return (
     <BrowserRouter>
-    <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/statistics" element={<StatisticsPage />} />
-        <Route path="/customer" element={<CustomerPage />} />
-        <Route path="/bills" element={<BillsPage />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <HomePage />
+            </>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <>
+              <Header />
+              <CartPage />
+            </>
+          }
+        />
+        <Route
+          path="/statistics"
+          element={
+            <>
+              <Header />
+              <StatisticsPage />
+            </>
+          }
+        />
+        <Route
+          path="/customer"
+          element={
+            <>
+              <Header />
+              <CustomerPage />
+            </>
+          }
+        />
+        <Route
+          path="/bills"
+          element={
+            <>
+              <Header />
+              <BillsPage />
+            </>
+          }
+        />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
   );
