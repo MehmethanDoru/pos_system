@@ -6,6 +6,7 @@ import CustomerPage from "./pages/CustomersPage";
 import BillsPage from "./pages/BillsPage";
 import Header from "./components/header/header";
 import RegisterPage from "./pages/auth/register";
+import LoginPage from "./pages/auth/login";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           }
         />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
   );
