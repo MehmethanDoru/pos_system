@@ -5,28 +5,28 @@ import (
 	"encoding/json"
 	"net/http"
 	"pos-backend/models"
+	"strings"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-var collection *mongo.Collection
+var categoryCollection *mongo.Collection
 
 type CategoryController struct {
 	client *mongo.Client
 }
 
 func NewCategoryController(client *mongo.Client) *CategoryController {
-	collection = client.Database("pos-app").Collection("categories")
+	categoryCollection = client.Database("pos-app").Collection("categories")
 	return &CategoryController{client: client}
 }
 
-// Get Categories
+// Get all categories
 func (cc *CategoryController) GetCategories(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var categories []models.Category
-	cursor, err := collection.Find(context.TODO(), bson.M{})
+	cursor, err := categoryCollection.Find(context.TODO(), bson.M{})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -36,19 +36,21 @@ func (cc *CategoryController) GetCategories(w http.ResponseWriter, r *http.Reque
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(categories)
 }
 
-// Create Category
+// Create a new category
 func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
 	var category models.Category
 	_ = json.NewDecoder(r.Body).Decode(&category)
 	category.ID = primitive.NewObjectID()
-	_, err := collection.InsertOne(context.TODO(), category)
+	category.Slug = strings.ToLower(strings.ReplaceAll(category.Name, " ", "-"))
+	_, err := categoryCollection.InsertOne(context.TODO(), category)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(category)
 }
