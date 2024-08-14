@@ -63,5 +63,4 @@ func main() {
 	corsRouter := enableCors(router)
 
 	http.ListenAndServe(":8080", corsRouter)
-
 }

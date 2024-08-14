@@ -23,7 +23,7 @@ func NewCategoryController(client *mongo.Client) *CategoryController {
 	return &CategoryController{client: client}
 }
 
-// Get all categories
+// Get All Category
 func (cc *CategoryController) GetCategories(w http.ResponseWriter, r *http.Request) {
 	var categories []models.Category
 	cursor, err := categoryCollection.Find(context.TODO(), bson.M{})
@@ -40,7 +40,7 @@ func (cc *CategoryController) GetCategories(w http.ResponseWriter, r *http.Reque
 	json.NewEncoder(w).Encode(categories)
 }
 
-// Create a new category
+// Create a New Category
 func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Request) {
 	var category models.Category
 	_ = json.NewDecoder(r.Body).Decode(&category)
@@ -53,4 +53,73 @@ func (cc *CategoryController) CreateCategory(w http.ResponseWriter, r *http.Requ
 	}
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(category)
+}
+
+// Update Category
+func (cc *CategoryController) UpdateCategory(w http.ResponseWriter, r *http.Request) {
+
+	var category models.Category
+	if err := json.NewDecoder(r.Body).Decode(&category); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	if category.ID.IsZero() {
+		http.Error(w, "ID is required", http.StatusBadRequest)
+		return
+	}
+
+	ctx := context.TODO()
+	update := bson.D{
+		{"$set", bson.D{
+			{"name", category.Name},
+			{"slug", strings.ToLower(strings.ReplaceAll(category.Name, " ", "-"))},
+		}},
+	}
+	result, err := categoryCollection.UpdateOne(
+		ctx,
+		bson.M{"_id": category.ID},
+		update,
+	)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if result.ModifiedCount == 0 {
+		http.Error(w, "No document found with that ID", http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(result)
+}
+
+// Delete Category
+func (cc *CategoryController) DeleteCategory(w http.ResponseWriter, r *http.Request) {
+	var category models.Category
+	if err := json.NewDecoder(r.Body).Decode(&category); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	if category.ID.IsZero() {
+		http.Error(w, "ID is required", http.StatusBadRequest)
+		return
+	}
+
+	ctx := context.TODO()
+	result, err := categoryCollection.DeleteOne(ctx, bson.M{"_id": category.ID})
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if result.DeletedCount == 0 {
+		http.Error(w, "No document found with that ID", http.StatusNotFound)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{"status": "success", "message": "Category deleted successfully"})
 }
