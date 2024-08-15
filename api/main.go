@@ -13,8 +13,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// var client *mongo.Client
-
 // CORS Middleware
 func enableCors(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
