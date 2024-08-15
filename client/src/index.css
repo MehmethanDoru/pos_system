@@ -19,7 +19,9 @@ body {
 .product-item {
   border: 1px solid rgba(0, 0, 0, 0.302);
 }
-
+.custom-table .ant-table-cell {
+  font-size: 13px;
+}
 @media screen and (min-width: 768px) {
   body {
     overflow: hidden;
