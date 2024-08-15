@@ -1,21 +1,58 @@
-import { Button, Carousel, Checkbox, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Carousel, Checkbox, Form, Input, message } from "antd";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import AuthCorousel from "../../components/authCorousel/authCorousel";
+import React from "react";
 
-const login = () => {
+const Login = () => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  
+
+  const handleLogin = async (values) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        localStorage.setItem("user", JSON.stringify(data)); 
+        message.success("Login successful!");
+        navigate("/"); 
+      } else {
+        message.error("Login failed!");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      message.error("Login failed!");
+    }
+  };
+
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
         <div className="xl:px-20 px-10 w-full flex flex-col h-full justify-center relative">
           <h1 className="text-center text-5xl font-bold mb-2">LOGO</h1>
-          <Form layout="vertical">
+          <Form layout="vertical" form={form} onFinish={handleLogin}>
             <Form.Item
               label="E-mail"
-              name={"email"}
+              name="email"
               rules={[
                 {
                   required: true,
                   message: "E-mail is required!",
+                },
+                {
+                  type: "email",
+                  message: "Please enter a valid email address!",
                 },
               ]}
             >
@@ -23,7 +60,7 @@ const login = () => {
             </Form.Item>
             <Form.Item
               label="Password"
-              name={"password"}
+              name="password"
               rules={[
                 {
                   required: true,
@@ -33,10 +70,10 @@ const login = () => {
             >
               <Input.Password />
             </Form.Item>
-            <Form.Item name={"remember"} valuePropName="checked">
+            <Form.Item name="remember" valuePropName="checked">
               <div className="flex justify-between items-center">
                 <Checkbox>Remember me</Checkbox>
-                <Link>Forgot Password?</Link>
+                <Link to="/forgot-password">Forgot Password?</Link>
               </div>
             </Form.Item>
             <Form.Item>
@@ -90,4 +127,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

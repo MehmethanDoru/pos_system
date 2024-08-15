@@ -1,17 +1,48 @@
-import { Button, Carousel, Form, Input } from "antd";
+import { Button, Carousel, Form, Input, message } from "antd";
 import { Link } from "react-router-dom";
 import AuthCorousel from "../../components/authCorousel/authCorousel";
+import React from "react";
 
-const register = () => {
+const Register = () => {
+  const [form] = Form.useForm();
+
+  const handleRegister = async (values) => {
+    try {
+      const response = await fetch("http://localhost:8080/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: values.username,
+          email: values.email,
+          password: values.password,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        message.success("User registered successfully!");
+        form.resetFields();
+      } else {
+        message.error("Registration failed!");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      message.error("Registration failed!");
+    }
+  };
+
   return (
     <div className="h-screen">
       <div className="flex justify-between h-full">
         <div className="xl:px-20 px-10 w-full flex flex-col h-full justify-center relative">
           <h1 className="text-center text-5xl font-bold mb-2">LOGO</h1>
-          <Form layout="vertical">
+          <Form layout="vertical" form={form} onFinish={handleRegister}>
             <Form.Item
               label="Username"
-              name={"username"}
+              name="username"
               rules={[
                 {
                   required: true,
@@ -23,11 +54,15 @@ const register = () => {
             </Form.Item>
             <Form.Item
               label="E-mail"
-              name={"email"}
+              name="email"
               rules={[
                 {
                   required: true,
                   message: "E-mail is required!",
+                },
+                {
+                  type: "email",
+                  message: "Please enter a valid email address!",
                 },
               ]}
             >
@@ -35,7 +70,7 @@ const register = () => {
             </Form.Item>
             <Form.Item
               label="Password"
-              name={"password"}
+              name="password"
               rules={[
                 {
                   required: true,
@@ -47,12 +82,21 @@ const register = () => {
             </Form.Item>
             <Form.Item
               label="Password Again"
-              name={"passwordAgain"}
+              name="passwordAgain"
+              dependencies={['password']}
               rules={[
                 {
                   required: true,
                   message: "Password Again is required!",
                 },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('The two passwords do not match!'));
+                  },
+                }),
               ]}
             >
               <Input.Password />
@@ -108,4 +152,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

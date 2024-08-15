@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { Area, Pie } from "@ant-design/plots";
 
 const StatisticsPage = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = user ? user.username : "Guest";  
+
   const config = {
     data: {
       type: 'fetch',
@@ -44,7 +47,7 @@ const StatisticsPage = () => {
         <div>
           <h2 className="text-lg">
             Welcome{" "}
-            <span className="text-green-700 font-bold text-xl">admin</span>.
+            <span className="text-green-700 font-bold text-xl">{username}</span>.
           </h2>
           <div className="analysis md:grid md:grid-cols-4 grid-cols-1 md:gap-14">
           <div className="statistic-cards my-10">

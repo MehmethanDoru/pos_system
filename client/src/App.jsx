@@ -8,63 +8,66 @@ import ProductsPage from "./pages/ProductsPage";
 import Header from "./components/header/header";
 import RegisterPage from "./pages/auth/register";
 import LoginPage from "./pages/auth/login";
+import PrivateRoutes from "./PrivateRoutes";
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem("user");
+  
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
           element={
-            <>
+            <PrivateRoutes>
               <Header />
               <HomePage />
-            </>
+            </PrivateRoutes>
           }
         />
         <Route
           path="/cart"
           element={
-            <>
+            <PrivateRoutes>
               <Header />
               <CartPage />
-            </>
+            </PrivateRoutes>
           }
         />
         <Route
           path="/statistics"
           element={
-            <>
+            <PrivateRoutes>
               <Header />
               <StatisticsPage />
-            </>
+            </PrivateRoutes>
           }
         />
         <Route
           path="/customer"
           element={
-            <>
+            <PrivateRoutes>
               <Header />
               <CustomerPage />
-            </>
+            </PrivateRoutes>
           }
         />
         <Route
           path="/bills"
           element={
-            <>
+            <PrivateRoutes>
               <Header />
               <BillsPage />
-            </>
+            </PrivateRoutes>
           }
         />
         <Route
           path="/products"
           element={
-            <>
+            <PrivateRoutes>
               <Header />
               <ProductsPage />
-            </>
+            </PrivateRoutes>
           }
         />
         <Route path="/register" element={<RegisterPage />} />

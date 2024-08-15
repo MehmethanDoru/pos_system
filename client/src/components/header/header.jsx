@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 import {
@@ -11,8 +11,23 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import { Input, Badge } from "antd";
+import { useNavigate } from "react-router-dom";
 
-const header = () => {
+const Header = () => {
+  const navigate = useNavigate();
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedOut(true); 
+  };
+
+  useEffect(() => {
+    if (isLoggedOut) {
+      navigate("/login"); 
+    }
+  }, [isLoggedOut, navigate]);
+
   return (
     <div className="border-b mb-6">
       <header className="py-4 px-6 flex justify-between items-center gap-10">
@@ -34,12 +49,12 @@ const header = () => {
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
           </Link>
-            <Badge count={8} offset={[0,6]} className="md:flex hidden">
-          <Link to={"/cart"} className="flex flex-col">
+          <Badge count={8} offset={[0, 6]} className="md:flex hidden">
+            <Link to={"/cart"} className="flex flex-col">
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
-            <span className="md:text-xs text-[10px]">Cart</span>
-          </Link>
-            </Badge>
+              <span className="md:text-xs text-[10px]">Cart</span>
+            </Link>
+          </Badge>
           <Link to={"/bills"} className="flex flex-col">
             <CopyOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Bills</span>
@@ -52,7 +67,7 @@ const header = () => {
             <BarChartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Statistics</span>
           </Link>
-          <Link to={""} className="flex flex-col">
+          <Link onClick={handleLogout} className="flex flex-col">
             <LogoutOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Log Out</span>
           </Link>
@@ -68,4 +83,4 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;
