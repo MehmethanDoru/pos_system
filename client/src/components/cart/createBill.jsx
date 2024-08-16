@@ -68,7 +68,7 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
         </Form.Item>
         <Form.Item
           label="Phone Number"
-          name={"phoneNumber"}
+          name={"customerPhoneNumber"}
           rules={[
             {
               required: true,
