@@ -1,4 +1,4 @@
-import { Button, Card, Modal, Table, message, Popconfirm } from "antd";
+import { Button, Card, Modal, Table, message, Popconfirm, Image } from "antd";
 import { useState } from "react";
 import CreateBill from "../components/cart/createBill";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,6 @@ const CartPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  console.log(cart.cartItems); 
 
   const columns = [
     {
@@ -18,7 +17,7 @@ const CartPage = () => {
       key: "img",
       width: "125px",
       render: (text) => {
-        return <img src={text} alt="" className="h-20 object-cover" />;
+        return <Image src={text} alt="" className="h-20 object-cover" />;
       },
     },
     {
@@ -106,27 +105,31 @@ const CartPage = () => {
   ];
 
   return (
-   <div className="px-6">
-        <Table
-          dataSource={cart.cartItems.map(item => ({ ...item, key: item._id }))} 
-          columns={columns}
-          bordered
-          pagination={false}
-          scroll={{ x: "100%" }}
+    <div className="px-6">
+      <Table
+        dataSource={cart.cartItems.map((item) => ({ ...item, key: item._id }))}
+        columns={columns}
+        bordered
+        pagination={false}
+        scroll={{ x: "100%" }}
       />
       <div className="cart-total flex justify-end">
         <Card className="w-72 mt-4">
           <div className="flex justify-between">
             <span>Subtotal</span>
-            <span>549.00₺</span>
+            <span>{cart.total.toFixed(2)}₺</span>
           </div>
           <div className="flex justify-between my-2">
-            <span>KDV %8</span>
-            <span className="text-red-600">+43.92₺</span>
+            <span>KDV %{cart.tax}</span>
+            <span className="text-red-600">
+              {((cart.total * cart.tax) / 100).toFixed(2)}₺
+            </span>
           </div>
           <div className="flex justify-between">
             <b>Total</b>
-            <b>592.92₺</b>
+            <b>
+              {(cart.total + (cart.total * cart.tax) / 100).toFixed(2)}₺
+            </b>
           </div>
           <Button
             className="mt-4 w-full"
