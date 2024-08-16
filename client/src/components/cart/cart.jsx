@@ -11,7 +11,7 @@ import { deleteCart } from "../../redux/cartSlice";
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch= useDispatch()
-
+  const cart = useSelector((state) => state.cart);
   return (
     <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
       <h2 className="bg-blue-600 text-center py-4 text-white font-bold tracking-wide">
@@ -54,17 +54,17 @@ const Cart = () => {
         <div className="border-t border-b">
           <div className="flex justify-between p-2">
             <b>Subtotal</b>
-            <span>75₺</span>
+            <span>{cart.total.toFixed(2)}₺</span>
           </div>
           <div className="flex justify-between p-2">
-            <b>Tax Fee (%8)</b>
-            <span className="text-red-700">+6₺</span>
+            <b>Tax Fee (%{cart.tax})</b>
+            <span className="text-red-700">+{((cart.total * cart.tax) / 100).toFixed(2)}₺</span>
           </div>
         </div>
         <div className="border-b mt-4">
           <div className="flex justify-between p-2">
             <b className="text-xl text-green-600">Total</b>
-            <span className="text-xl">81₺</span>
+            <span className="text-xl">{(cart.total + (cart.total * cart.tax) / 100).toFixed(2)}₺</span>
           </div>
         </div>
         <div className="py-4 px-2">
