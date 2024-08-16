@@ -5,9 +5,12 @@ import {
   PlusCircleOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { deleteCart } from "../../redux/cartSlice";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const dispatch= useDispatch()
 
   return (
     <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
@@ -21,7 +24,8 @@ const Cart = () => {
               <img
                 src={product.img}
                 alt="not found"
-                className="w-16 h-16 object-cover"
+                className="w-16 h-16 object-cover cursor-pointer"
+                onClick={()=> dispatch(deleteCart(product))}
               />
               <div className="flex flex-col ml-2">
                 <b>{product.title}</b>
