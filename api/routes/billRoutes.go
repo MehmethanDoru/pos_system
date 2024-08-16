@@ -7,6 +7,6 @@ import (
 )
 
 func BillRoutes(router *mux.Router, bc *controllers.BillController) {
+	router.HandleFunc("/api/bills/add-bill", bc.AddBill).Methods("POST")
 	router.HandleFunc("/api/bills", bc.GetBills).Methods("GET")
-	router.HandleFunc("/api/bills", bc.CreateBill).Methods("POST")
 }
