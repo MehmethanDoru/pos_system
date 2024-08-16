@@ -7,11 +7,14 @@ import {
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { deleteCart, increase, decrease, reset } from "../../redux/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+  const navigate = useNavigate()
+
   return (
     <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
       <h2 className="bg-blue-600 text-center py-4 text-white font-bold tracking-wide">
@@ -57,9 +60,10 @@ const Cart = () => {
                 onClick={() => {
                   if (product.quantity === 1) {
                     if (window.confirm("Do you want to delete product?")) {
-                      {dispatch(decrease(product));
-                        message.success("Product Deleted.")
-                      };
+                      {
+                        dispatch(decrease(product));
+                        message.success("Product Deleted.");
+                      }
                     }
                   }
                   if (product.quantity > 1) {
@@ -96,7 +100,13 @@ const Cart = () => {
           </div>
         </div>
         <div className="py-4 px-2">
-          <Button type="primary" size="large" className="w-full">
+          <Button
+            type="primary"
+            size="large"
+            className="w-full"
+            disabled={cart.cartItems.length === 0}
+            onClick={() => navigate("/cart")}
+          >
             Order
           </Button>
           <Button
