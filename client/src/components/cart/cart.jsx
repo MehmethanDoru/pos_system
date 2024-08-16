@@ -1,343 +1,50 @@
 import { Button } from "antd";
+import { useSelector } from "react-redux";
 import {
-    ClearOutlined,
-    PlusCircleOutlined,
-    MinusCircleOutlined,
-  } from "@ant-design/icons";
+  ClearOutlined,
+  PlusCircleOutlined,
+  MinusCircleOutlined,
+} from "@ant-design/icons";
 
-const cart = () => {
+const Cart = () => {
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
       <h2 className="bg-blue-600 text-center py-4 text-white font-bold tracking-wide">
         Products in Cart
       </h2>
       <ul className="cart-items px-2 flex flex-col gap-y-3 py-2 overflow-y-auto">
-        <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
+        {cartItems.map((product) => (
+          <li className="cart-item flex justify-between" key={product._id}>
+            <div className="flex items-center">
+              <img
+                src={product.img}
+                alt="not found"
+                className="w-16 h-16 object-cover"
+              />
+              <div className="flex flex-col ml-2">
+                <b>{product.title}</b>
+                <span>{product.price}₺ x {product.quantity}</span>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li>
-        <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
+            <div className="flex items-center gap-x-1">
+              <Button
+                type="primary"
+                size="small"
+                className="w-full flex items-center justify-center !rounded-full"
+                icon={<PlusCircleOutlined />}
+              />
+              <span className="">{product.quantity}</span>
+              <Button
+                type="primary"
+                size="small"
+                className="w-full flex items-center justify-center !rounded-full"
+                icon={<MinusCircleOutlined />}
+              />
             </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li> <li className="cart-item flex justify-between">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.yemek.com/mnresize/1250/833/uploads/2023/04/sis-kebap-onecikan.jpg"
-              alt=""
-              className="w-16 h-16 object-cover"
-            />
-            <div className="flex flex-col ml-2">
-              <b>Şiş Kebap</b>
-              <span>25.99₺ x 3</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-x-1">
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<PlusCircleOutlined />}
-            />
-            <span className="">3</span>
-            <Button
-              type="primary"
-              size="small"
-              className="w-full flex items-center justify-center !rounded-full"
-              icon={<MinusCircleOutlined />}
-            />
-          </div>
-        </li>
+          </li>
+        ))}
       </ul>
       <div className="cart mt-auto">
         <div className="border-t border-b">
@@ -375,4 +82,4 @@ const cart = () => {
   );
 };
 
-export default cart;
+export default Cart;

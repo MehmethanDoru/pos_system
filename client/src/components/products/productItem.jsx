@@ -9,7 +9,7 @@ const ProductItem = ({ product }) => {
   
 
   const handleClick = () => {
-    dispatch(addProduct(product));
+    dispatch(addProduct({...product, quantity:1}));
   };
 
   return (
