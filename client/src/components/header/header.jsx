@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./header.css";
 import {
@@ -16,7 +17,8 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
   const [isLoggedOut, setIsLoggedOut] = useState(false);
-
+  const cart = useSelector((state) => state.cart);
+  
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsLoggedOut(true); 
@@ -32,7 +34,7 @@ const Header = () => {
     <div className="border-b mb-6">
       <header className="py-4 px-6 flex justify-between items-center gap-10">
         <div className="logo">
-          <Link to="">
+          <Link to={"/"}>
             <h2 className="text-2xl font-bold md:text-4xl">LOGO</h2>
           </Link>
         </div>
@@ -49,7 +51,7 @@ const Header = () => {
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
           </Link>
-          <Badge count={8} offset={[0, 6]} className="md:flex hidden">
+          <Badge count={cart.cartItems.length} offset={[0, 6]} className="md:flex hidden">
             <Link to={"/cart"} className="flex flex-col">
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Cart</span>
@@ -72,7 +74,7 @@ const Header = () => {
             <span className="md:text-xs text-[10px]">Log Out</span>
           </Link>
         </div>
-        <Badge count={8} offset={[0, 6]} className="md:hidden flex">
+        <Badge count={cart.cartItems.length} offset={[0, 6]} className="md:hidden flex">
           <Link to={"/cart"} className="flex flex-col">
             <ShoppingCartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Cart</span>
