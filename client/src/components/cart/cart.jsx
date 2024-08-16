@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { useSelector } from "react-redux";
 import {
   ClearOutlined,
@@ -6,11 +6,11 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { deleteCart, increase, decrease } from "../../redux/cartSlice";
+import { deleteCart, increase, decrease, reset } from "../../redux/cartSlice";
 
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   return (
     <div className="cart h-full md:max-h-[calc(100vh_-_90px)] flex-col mt-[-1000px] md:mt-0 max-h-[calc(100vh_-_400px)] bg-white md:bg-transparent bottom-0 hidden md:flex ">
@@ -25,11 +25,16 @@ const Cart = () => {
                 src={product.img}
                 alt="not found"
                 className="w-16 h-16 object-cover cursor-pointer"
-                onClick={()=> dispatch(deleteCart(product))}
+                onClick={() => {
+                  dispatch(deleteCart(product));
+                  message.success("Product Deleted from Cart.");
+                }}
               />
               <div className="flex flex-col ml-2">
                 <b>{product.title}</b>
-                <span>{product.price}₺ x {product.quantity}</span>
+                <span>
+                  {product.price}₺ x {product.quantity}
+                </span>
               </div>
             </div>
             <div className="flex items-center gap-x-1">
@@ -38,7 +43,10 @@ const Cart = () => {
                 size="small"
                 className="w-full flex items-center justify-center !rounded-full"
                 icon={<PlusCircleOutlined />}
-                onClick={() => dispatch(increase(product))}
+                onClick={() => {
+                  dispatch(increase(product));
+                  message.success("Product Quantity Increased.");
+                }}
               />
               <span className="">{product.quantity}</span>
               <Button
@@ -49,11 +57,16 @@ const Cart = () => {
                 onClick={() => {
                   if (product.quantity === 1) {
                     if (window.confirm("Do you want to delete product?")) {
-                      dispatch(decrease(product));
+                      {dispatch(decrease(product));
+                        message.success("Product Deleted.")
+                      };
                     }
                   }
                   if (product.quantity > 1) {
-                    dispatch(decrease(product));
+                    {
+                      dispatch(decrease(product));
+                      message.success("Product Quantity Decreased.");
+                    }
                   }
                 }}
               />
@@ -69,13 +82,17 @@ const Cart = () => {
           </div>
           <div className="flex justify-between p-2">
             <b>Tax Fee (%{cart.tax})</b>
-            <span className="text-red-700">+{((cart.total * cart.tax) / 100).toFixed(2)}₺</span>
+            <span className="text-red-700">
+              +{((cart.total * cart.tax) / 100).toFixed(2)}₺
+            </span>
           </div>
         </div>
         <div className="border-b mt-4">
           <div className="flex justify-between p-2">
             <b className="text-xl text-green-600">Total</b>
-            <span className="text-xl">{(cart.total + (cart.total * cart.tax) / 100).toFixed(2)}₺</span>
+            <span className="text-xl">
+              {(cart.total + (cart.total * cart.tax) / 100).toFixed(2)}₺
+            </span>
           </div>
         </div>
         <div className="py-4 px-2">
@@ -88,6 +105,13 @@ const Cart = () => {
             className="w-full mt-2 flex items-center justify-center"
             icon={<ClearOutlined />}
             danger
+            disabled={cart.cartItems.length === 0}
+            onClick={() => {
+              if (window.confirm("Are You Sure?")) {
+                dispatch(reset());
+                message.success("The Cart has been Successfully Cleaned.");
+              }
+            }}
           >
             Delete All
           </Button>
