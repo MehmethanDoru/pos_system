@@ -8,6 +8,7 @@ const StatisticsPage = () => {
   const [bills, setBills] = useState([]);
   const [totalSales, setTotalSales] = useState(0);
   const [topCustomers, setTopCustomers] = useState([]);
+  const [uniqueCustomers, setUniqueCustomers] = useState(0); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,7 +28,18 @@ const StatisticsPage = () => {
         );
         setTotalSales(totalSalesAmount);
 
-        // total earning from per customer
+        // Unique customers
+        const customerSet = new Set();  
+        billsData.forEach((bill) => {
+          let customerName = bill.customerName;
+          if (!customerName || customerName.trim() === "") {
+            customerName = "Unknown";
+          }
+          customerSet.add(customerName);
+        });
+        setUniqueCustomers(customerSet.size);  
+
+        // Total earning from per customer
         const customerSales = {};
         billsData.forEach((bill) => {
           let customerName = bill.customerName;
@@ -55,7 +67,7 @@ const StatisticsPage = () => {
     fetchData();
   }, []);
 
-  // find total earnings per day
+  // Find total earnings per day
   const groupedData = bills.reduce((acc, bill) => {
     const date = new Date(bill.createdAt).toISOString().split("T")[0]; 
     if (!acc[date]) {
@@ -65,13 +77,13 @@ const StatisticsPage = () => {
     return acc;
   }, {});
 
-  // total earnings per day
+  // Total earnings per day
   const lineData = Object.entries(groupedData).map(([date, total]) => ({
     date,
     total,
   }));
 
-// Top 5 customer
+  // Top 5 customer
   const pieData = topCustomers.map((customer) => ({
     type: customer.name, 
     value: customer.total,
@@ -133,7 +145,7 @@ const StatisticsPage = () => {
                       Total Customers
                     </p>
                     <p className="text-xl font-semibold text-gray-200">
-                      {bills.length}
+                      {uniqueCustomers} 
                     </p>
                   </div>
                 </div>

@@ -10,72 +10,98 @@ import HeaderForHomePage from "./components/header/headerForHomePage";
 import RegisterPage from "./pages/auth/register";
 import LoginPage from "./pages/auth/login";
 import PrivateRoutes from "./PrivateRoutes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("user");
   const [searchTerm, setSearchTerm] = useState(""); 
-  
+  const [loading, setLoading] = useState(true); // Loader için state
+
+  // Sayfa yüklendiğinde 1 saniye boyunca loader göster
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1300); // 1 saniye sonra loader'ı kapat
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, []);
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoutes>
-              <HeaderForHomePage setSearchTerm={setSearchTerm} />
-              <HomePage searchTerm={searchTerm} /> 
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <PrivateRoutes>
-              <Header />
-              <CartPage />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/statistics"
-          element={
-            <PrivateRoutes>
-              <Header />
-              <StatisticsPage />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/customer"
-          element={
-            <PrivateRoutes>
-              <Header />
-              <CustomerPage />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/bills"
-          element={
-            <PrivateRoutes>
-              <Header />
-              <BillsPage />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/products"
-          element={
-            <PrivateRoutes>
-              <Header />
-              <ProductsPage />
-            </PrivateRoutes>
-          }
-        />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
+      {loading ? (
+        <div className="spinner">
+          <div></div>   
+          <div></div>    
+          <div></div>    
+          <div></div>    
+          <div></div>    
+          <div></div>    
+          <div></div>    
+          <div></div>    
+          <div></div>    
+          <div></div>    
+        </div>
+      ) : (
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoutes>
+                <HeaderForHomePage setSearchTerm={setSearchTerm} />
+                <HomePage searchTerm={searchTerm} /> 
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <PrivateRoutes>
+                <Header />
+                <CartPage />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/statistics"
+            element={
+              <PrivateRoutes>
+                <Header />
+                <StatisticsPage />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/customer"
+            element={
+              <PrivateRoutes>
+                <Header />
+                <CustomerPage />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/bills"
+            element={
+              <PrivateRoutes>
+                <Header />
+                <BillsPage />
+              </PrivateRoutes>
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <PrivateRoutes>
+                <Header />
+                <ProductsPage />
+              </PrivateRoutes>
+            }
+          />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      )}
     </BrowserRouter>
   );
 }
