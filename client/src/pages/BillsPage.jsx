@@ -80,7 +80,7 @@ const BillsPage = () => {
     <>
       <div className="px-6">
         <h1 className="text-4xl font-bold text-center mb-4">Bills</h1>
-        <div className="h-screen overflow-x-auto md:pb-52 pb-16">
+        <div className="overflow-x-auto">
           <Table
             className="custom-table"
             columns={columns}
@@ -90,7 +90,7 @@ const BillsPage = () => {
             pagination={{
               pageSize: 50,
             }}
-            scroll={{ x: "100%" }}
+            scroll={{ x: "100%", y: "60vh" }} 
           />
         </div>
       </div>
