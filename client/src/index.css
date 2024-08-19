@@ -16,6 +16,14 @@ body {
   display: none;
 }
 
+.active {
+  color: rgb(81, 108, 244); 
+}
+
+.active .anticon {
+  color: rgb(81, 108, 244); 
+}
+
 .product-item {
   border: 1px solid rgba(0, 0, 0, 0.302);
 }

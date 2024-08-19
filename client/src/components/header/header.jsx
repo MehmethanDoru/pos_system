@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./header.css";
 import {
   SearchOutlined,
@@ -16,9 +16,11 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const cart = useSelector((state) => state.cart);
-  console.log(cart.cartItems.length);
+  console.log(location.pathname)
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsLoggedOut(true);
@@ -49,7 +51,10 @@ const Header = () => {
           </Link>
         </div>
         <div className="menu-links flex justify-between gap-8 md:static fixed z-50 bottom-0 md:w-auto left-0 md:border-none border-t px-4 py-1 w-full bg-white md:bg-transparent">
-          <Link to={"/"} className="menu-link flex flex-col items-center">
+          <Link
+            to={"/"}
+            className={`menu-link flex flex-col items-center ${location.pathname === "/" ? "active" : ""}`}
+          >
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
           </Link>
@@ -58,20 +63,32 @@ const Header = () => {
             offset={[0, 6]}
             className="md:flex hidden"
           >
-            <Link to={"/cart"} className="flex flex-col">
+            <Link
+              to={"/cart"}
+              className={`flex flex-col ${location.pathname === "/cart" ? "active" : ""}`}
+            >
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Cart</span>
             </Link>
           </Badge>
-          <Link to={"/bills"} className="flex flex-col">
+          <Link
+            to={"/bills"}
+            className={`flex flex-col ${location.pathname === "/bills" ? "active" : ""}`}
+          >
             <CopyOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Bills</span>
           </Link>
-          <Link to={"/customer"} className="flex flex-col">
+          <Link
+            to={"/customer"}
+            className={`flex flex-col ${location.pathname === "/customer" ? "active" : ""}`}
+          >
             <UserOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Customers</span>
           </Link>
-          <Link to={"/statistics"} className="flex flex-col">
+          <Link
+            to={"/statistics"}
+            className={`flex flex-col ${location.pathname === "/statistics" ? "active" : ""}`}
+          >
             <BarChartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Statistics</span>
           </Link>
@@ -85,7 +102,10 @@ const Header = () => {
           offset={[0, 6]}
           className="md:hidden flex"
         >
-          <Link to={"/cart"} className="flex flex-col">
+          <Link
+            to={"/cart"}
+            className={`flex flex-col ${location.pathname === "/cart" ? "active" : ""}`}
+          >
             <ShoppingCartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Cart</span>
           </Link>
