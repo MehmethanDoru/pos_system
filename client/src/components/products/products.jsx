@@ -5,8 +5,9 @@ import { Modal } from "antd";
 import { Link } from "react-router-dom";
 import ProductItem from "./productItem";
 
-const Products = () => {
+const Products = ({ searchTerm, selectedCategory }) => {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -18,13 +19,38 @@ const Products = () => {
         }
         return response.json();
       })
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        filterProducts(data); 
+      })
       .catch((error) => console.error("Error fetching products:", error));
   };
 
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    filterProducts(products); 
+  }, [searchTerm, selectedCategory]);
+
+  const filterProducts = (products) => {
+    let filtered = products;
+
+    if (selectedCategory !== "All") {
+      filtered = filtered.filter(
+        (product) => product.category === selectedCategory
+      );
+    }
+
+    if (searchTerm) {
+      filtered = filtered.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    setFilteredProducts(filtered);
+  };
 
   const handleCancel = () => {
     setIsAddModalOpen(false);
@@ -33,7 +59,7 @@ const Products = () => {
 
   return (
     <div className="products-wrapper grid grid-cols-card md:grid-cols-card-md gap-4">
-      {products.map((product) => (
+      {filteredProducts.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}
 

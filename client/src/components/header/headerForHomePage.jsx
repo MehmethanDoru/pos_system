@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import "./header.css";
 import {
   SearchOutlined,
   HomeOutlined,
@@ -14,21 +13,28 @@ import {
 import { Input, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const HeaderForHomePage = ({ setSearchTerm }) => {
   const navigate = useNavigate();
   const [isLoggedOut, setIsLoggedOut] = useState(false);
+  const [search, setSearch] = useState(""); 
   const cart = useSelector((state) => state.cart);
-  console.log(cart.cartItems.length);
+
   const handleLogout = () => {
     localStorage.removeItem("user");
-    setIsLoggedOut(true);
+    setIsLoggedOut(true); 
   };
 
   useEffect(() => {
     if (isLoggedOut) {
-      navigate("/login");
+      navigate("/login"); 
     }
   }, [isLoggedOut, navigate]);
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    setSearchTerm(value);
+  };
 
   return (
     <div className="border-b mb-6">
@@ -39,25 +45,21 @@ const Header = () => {
           </Link>
         </div>
         <div className="header-search flex-1">
-          <Link to={"/"}>
-            <Input
-              size="large"
-              placeholder="Search Product"
-              prefix={<SearchOutlined />}
-              className="rounded-full max-w-[900px]"
-            />
-          </Link>
+          <Input
+            size="large"
+            placeholder="Search Product"
+            prefix={<SearchOutlined />}
+            className="rounded-full max-w-[900px]"
+            value={search}
+            onChange={handleSearch} 
+          />
         </div>
         <div className="menu-links flex justify-between gap-8 md:static fixed z-50 bottom-0 md:w-auto left-0 md:border-none border-t px-4 py-1 w-full bg-white md:bg-transparent">
           <Link to={"/"} className="menu-link flex flex-col items-center">
             <HomeOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Home</span>
           </Link>
-          <Badge
-            count={cart.cartItems.length}
-            offset={[0, 6]}
-            className="md:flex hidden"
-          >
+          <Badge count={cart.cartItems.length} offset={[0, 6]} className="md:flex hidden">
             <Link to={"/cart"} className="flex flex-col">
               <ShoppingCartOutlined className="md:text-2xl text-xl" />
               <span className="md:text-xs text-[10px]">Cart</span>
@@ -80,11 +82,7 @@ const Header = () => {
             <span className="md:text-xs text-[10px]">Log Out</span>
           </Link>
         </div>
-        <Badge
-          count={cart.cartItems.length}
-          offset={[0, 6]}
-          className="md:hidden flex"
-        >
+        <Badge count={cart.cartItems.length} offset={[0, 6]} className="md:hidden flex">
           <Link to={"/cart"} className="flex flex-col">
             <ShoppingCartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Cart</span>
@@ -95,4 +93,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderForHomePage;

@@ -20,17 +20,17 @@ const CustomersPage = () => {
 
   const columns = [
     {
-      title: "Müşteri Adı",
+      title: "Customer Name",
       dataIndex: "customerName",
       key: "customerName",
     },
     {
-      title: "Telefon Numarası",
+      title: "Phone Number",
       dataIndex: "customerPhoneNumber",
       key: "customerPhoneNumber",
     },
     {
-      title: "İşlem Tarihi",
+      title: "Date of Transaction",
       dataIndex: "createdAt",
       key: "createdAt",
       render: (text) => {

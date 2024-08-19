@@ -82,8 +82,8 @@ const StatisticsPage = () => {
     data: lineData,
     xField: "date",
     yField: "total",
-    xAxis: { title: { text: "Tarih" } },
-    yAxis: { title: { text: "Günlük Toplam Kazanç" } },
+    xAxis: { title: { text: "Date" } },
+    yAxis: { title: { text: "Total earnings per day" } },
     smooth: true,
     color: "#1f77b4",
     point: {

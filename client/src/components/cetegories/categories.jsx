@@ -4,7 +4,7 @@ import Add from "./add";
 import Edit from "./edit";
 import { message, Modal } from 'antd';
 
-const Categories = () => {
+const Categories = ({ selectedCategory, setSelectedCategory }) => {
   const [categories, setCategories] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -50,11 +50,9 @@ const Categories = () => {
     .then(() => {
       fetchCategories();
       message.success("Category Deleted!");
-
     })
     .catch((error) => console.error("Error deleting category:", error));
-};
-
+  };
 
   const handleCancel = () => {
     setIsAddModalOpen(false);
@@ -64,13 +62,21 @@ const Categories = () => {
   return (
     <div>
       <ul className="flex md:flex-col gap-6">
-        <li className="bg-green-600 py-8 px-10 text-white cursor-pointer hover:bg-rose-500 transition-all text-center">
+        <li 
+          className={`py-8 px-10 text-white cursor-pointer transition-all text-center ${
+            selectedCategory === "All" ? "bg-rose-500" : "bg-green-600 hover:bg-rose-500"
+          }`}
+          onClick={() => setSelectedCategory("All")}
+        >
           <span>All</span>
         </li>
         {categories.map((category, index) => (
           <li
             key={index}
-            className="bg-green-600 py-8 px-10 text-white cursor-pointer hover:bg-rose-500 transition-all text-center"
+            className={`py-8 px-10 text-white cursor-pointer transition-all text-center ${
+              selectedCategory === category.name ? "bg-rose-500" : "bg-green-600 hover:bg-rose-500"
+            }`}
+            onClick={() => setSelectedCategory(category.name)}
           >
             <span>{category.name}</span>
           </li>

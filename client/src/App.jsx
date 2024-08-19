@@ -6,12 +6,15 @@ import CustomerPage from "./pages/CustomersPage";
 import BillsPage from "./pages/BillsPage";
 import ProductsPage from "./pages/ProductsPage";
 import Header from "./components/header/header";
+import HeaderForHomePage from "./components/header/headerForHomePage";
 import RegisterPage from "./pages/auth/register";
 import LoginPage from "./pages/auth/login";
 import PrivateRoutes from "./PrivateRoutes";
+import { useState } from "react";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("user");
+  const [searchTerm, setSearchTerm] = useState(""); 
   
   return (
     <BrowserRouter>
@@ -20,8 +23,8 @@ function App() {
           path="/"
           element={
             <PrivateRoutes>
-              <Header />
-              <HomePage />
+              <HeaderForHomePage setSearchTerm={setSearchTerm} />
+              <HomePage searchTerm={searchTerm} /> 
             </PrivateRoutes>
           }
         />
