@@ -6,7 +6,7 @@ const Add = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8080/api/categories", {
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

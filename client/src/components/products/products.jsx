@@ -12,7 +12,7 @@ const Products = ({ searchTerm, selectedCategory }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const fetchProducts = () => {
-    fetch("http://localhost:8080/api/products")
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

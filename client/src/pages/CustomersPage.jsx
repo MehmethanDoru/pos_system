@@ -12,7 +12,7 @@ const CustomersPage = () => {
   useEffect(() => {
     const getBills = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/bills");
+        const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills");
         const data = await res.json();
         setBillItems(data);
       } catch (error) {

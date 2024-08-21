@@ -11,7 +11,7 @@ const ProductsPage = () => {
   );
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/products")
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/products")
       .then((response) => response.json())
       .then((data) => setProducts(data))
       .catch((error) => console.error("Error fetching products:", error));
@@ -36,7 +36,7 @@ const ProductsPage = () => {
   };
 
   const handleUpdate = (updatedProduct) => {
-    fetch("http://localhost:8080/api/products", {
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/products", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -58,12 +58,12 @@ const ProductsPage = () => {
           message.success("Product updated successfully!");
         }
         //reload
-        return fetch("http://localhost:8080/api/products");
+        return fetch(process.env.REACT_APP_SERVER_URL + "/api/products");
       })
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data); // Yeni ürün verilerini tabloya ekle
-        setIsEditModalOpen(false); // Modal'ı kapat
+        setProducts(data);
+        setIsEditModalOpen(false); 
       })
       .catch((error) => {
         console.error("Error updating product:", error);
@@ -72,7 +72,7 @@ const ProductsPage = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/products`, {
+    fetch(process.env.REACT_APP_SERVER_URL + `/api/products`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +120,7 @@ const ProductsPage = () => {
           <Button
             type="link"
             onClick={() => {
-              handleEdit(record.id); // Düzenleme işlemi için id gönder
+              handleEdit(record.id);
             }}
           >
             Edit

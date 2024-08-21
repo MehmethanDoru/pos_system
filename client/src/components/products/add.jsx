@@ -6,7 +6,7 @@ const Add = ({ onClose }) => {
   const [form] = Form.useForm(); 
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/categories")
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/categories")
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched categories:", data); 
@@ -18,7 +18,7 @@ const Add = ({ onClose }) => {
   const handleSubmit = (values) => {
     console.log("Submitted values:", values);
 
-    fetch("http://localhost:8080/api/products", {
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

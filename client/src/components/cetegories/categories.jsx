@@ -10,7 +10,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const fetchCategories = () => {
-    fetch("http://localhost:8080/api/categories")
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/categories")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -26,7 +26,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
   }, []);
 
   const handleUpdate = (id, newName) => {
-    fetch(`http://localhost:8080/api/categories`, {
+    fetch(process.env.REACT_APP_SERVER_URL + `/api/categories`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:8080/api/categories`, {
+    fetch(process.env.REACT_APP_SERVER_URL + `/api/categories`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

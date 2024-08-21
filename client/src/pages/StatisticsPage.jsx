@@ -13,11 +13,11 @@ const StatisticsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsRes = await fetch("http://localhost:8080/api/products");
+        const productsRes = await fetch(process.env.REACT_APP_SERVER_URL + "/api/products");
         const productsData = await productsRes.json();
         setProducts(productsData);
 
-        const billsRes = await fetch("http://localhost:8080/api/bills");
+        const billsRes = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills");
         const billsData = await billsRes.json();
         setBills(billsData);
 

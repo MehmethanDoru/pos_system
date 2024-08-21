@@ -15,7 +15,7 @@ const BillsPage = () => {
   useEffect(() => {
     const fetchBills = async () => {
       try {
-        const res = await fetch("http://localhost:8080/api/bills");
+        const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills");
         if (res.status === 200) {
           const data = await res.json();
           setBills(data);

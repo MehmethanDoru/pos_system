@@ -6,7 +6,7 @@ const Edit = ({ product, onClose, onUpdate }) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/categories")
+    fetch(process.env.REACT_APP_SERVER_URL + "/api/categories")
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched categories:", data);

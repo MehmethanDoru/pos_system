@@ -25,7 +25,7 @@ const CreateBill = ({ isModalOpen, setIsModalOpen }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:8080/api/bills/add-bill", {
+      const res = await fetch(process.env.REACT_APP_SERVER_URL + "/api/bills/add-bill", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
