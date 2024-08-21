@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"pos-backend/controllers"
 	"pos-backend/routes"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -30,7 +32,15 @@ func enableCors(next http.Handler) http.Handler {
 }
 
 func main() {
-	clientOptions := options.Client().ApplyURI("mongodb+srv://doru01:e9WWsRFrVoOJjaN7@cluster0.gre1j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	mongoURI := os.Getenv("MONGO_URI")
+	port := os.Getenv("PORT")
+
+	clientOptions := options.Client().ApplyURI(mongoURI)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 
 	if err != nil {
@@ -60,5 +70,5 @@ func main() {
 
 	corsRouter := enableCors(router)
 
-	http.ListenAndServe(":8080", corsRouter)
+	http.ListenAndServe(":"+port, corsRouter)
 }
