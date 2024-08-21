@@ -11,20 +11,26 @@ import RegisterPage from "./pages/auth/register";
 import LoginPage from "./pages/auth/login";
 import PrivateRoutes from "./PrivateRoutes";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("user");
   const [searchTerm, setSearchTerm] = useState(""); 
-  const [loading, setLoading] = useState(true); // Loader için state
+  const [loading, setLoading] = useState(true);
 
-  // Sayfa yüklendiğinde 1 saniye boyunca loader göster
+  const cart = useSelector((state) => state.cart);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+  
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1300); // 1 saniye sonra loader'ı kapat
+    }, 1300); 
 
-    return () => clearTimeout(timer); // Cleanup timer
+    return () => clearTimeout(timer); 
   }, []);
 
   return (
