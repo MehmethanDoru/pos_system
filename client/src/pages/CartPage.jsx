@@ -4,12 +4,13 @@ import CreateBill from "../components/cart/createBill";
 import { useDispatch, useSelector } from "react-redux";
 import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { deleteCart, increase, decrease } from "../redux/cartSlice.js";
+import UseMediaQuery from "../hooks/useMediaQuery.jsx";
 
 const CartPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
+  const isMdUp = UseMediaQuery("(min-width: 768px)");
   const columns = [
     {
       title: "Image",
@@ -105,13 +106,13 @@ const CartPage = () => {
   ];
 
   return (
-    <div className="px-6">
+    <div className="px-6 pb-16 md:pb-24">
       <Table
         dataSource={cart.cartItems.map((item) => ({ ...item, key: item._id }))}
         columns={columns}
         bordered
         pagination={false}
-        scroll={{ x: "100%" }}
+        scroll={isMdUp ? { x: "100%", y: "50vh" } : { x: "100%" }}
       />
       <div className="cart-total flex justify-end">
         <Card className="w-72 mt-4">
@@ -127,9 +128,7 @@ const CartPage = () => {
           </div>
           <div className="flex justify-between">
             <b>Total</b>
-            <b>
-              {(cart.total + (cart.total * cart.tax) / 100).toFixed(2)}₺
-            </b>
+            <b>{(cart.total + (cart.total * cart.tax) / 100).toFixed(2)}₺</b>
           </div>
           <Button
             className="mt-4 w-full"
